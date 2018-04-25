@@ -19,6 +19,11 @@ import java.lang.InterruptedException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import javafx.stage.WindowEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.nio.file.Paths;
+import java.io.File;
+
 
 public class Game extends Application{
 
@@ -33,16 +38,26 @@ public class Game extends Application{
 	int newX;
 	int newY;
 	int score;
+	double seconds;
+	double timer;
 	DecimalFormat number = new DecimalFormat("#.0");
-	double seconds = 20.0;
-	double timer = 0.0;
 	Text time = new Text();
+	/*
+	final Media media = new Media(new File("lyd.mp3").toURI().toString());
+	final MediaPlayer mp = new MediaPlayer(media);
+	*/
 	@Override
 	public void start(Stage primaryStage) throws Exception{
+		String musicFile = "lyd.mp3";
+		Media sound = new Media(new File(musicFile).toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(sound);
+		mediaPlayer.play();
 		Button btn = new Button();
 		Button restart = new Button();
 		Runnable task = () -> {
-
+			seconds = 20.0;
+			timer = 0.0;
+			score = 0;
 			while(seconds >= 0.00005){
 			 	try{
 					TimeUnit.MILLISECONDS.sleep(100);
@@ -94,6 +109,8 @@ public class Game extends Application{
 		btn.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event){
+				mediaPlayer.stop();
+				mediaPlayer.play();
 				points.setText("Score: " + (++score));
 				timer = 0.0;
 				placeButton(btn);
@@ -103,9 +120,6 @@ public class Game extends Application{
 		restart.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event){
-				timer = 0.0;
-				seconds = 20.0;
-				score = 0;
 				executor.execute(task);
 				restart.setVisible(false);
 				btn.setVisible(true);

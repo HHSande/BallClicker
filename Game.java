@@ -98,31 +98,24 @@ public class Game extends Application{
 		btn.setLayoutX(150);
 		btn.setLayoutY(150);
 		root.getChildren().add(btn);
-		root.getChildren().add(points);
+		root.getChildren().add(points, time);
 		root.getChildren().add(time);
 		root.getChildren().add(restart);
 		primaryStage.setScene(new Scene(root, sceneX, sceneY));
 
 		
-		btn.setOnAction(new EventHandler<ActionEvent>(){
-			@Override
-			public void handle(ActionEvent event){
-				mediaPlayer.stop();
-				mediaPlayer.play();
-				points.setText("Score: " + (++score));
-				timer = 0.0;
-				placeButton(btn);
-			}
+		btn.setOnAction((event) -> {
+			points.setText("Score: " + (++score));
+			timer = 0.0;
+			placeButton(btn);
 		});
 		
-		restart.setOnAction(new EventHandler<ActionEvent>(){
-			@Override
-			public void handle(ActionEvent event){
-				executor.execute(task);
-				restart.setVisible(false);
-				btn.setVisible(true);
-				points.setText("Score: 0");
-			}
+		restart.setOnAction((event) -> {
+			executor.execute(task);
+			restart.setVisible(false);
+			btn.setVisible(true);
+			points.setText("Score: 0");
+			
 		});
 		
 		executor.execute(task);

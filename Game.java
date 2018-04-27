@@ -42,16 +42,14 @@ public class Game extends Application{
 	double timer;
 	DecimalFormat number = new DecimalFormat("#.0");
 	Text time = new Text();
-	/*
-	final Media media = new Media(new File("lyd.mp3").toURI().toString());
-	final MediaPlayer mp = new MediaPlayer(media);
-	*/
 	@Override
 	public void start(Stage primaryStage) throws Exception{
-		String musicFile = "lyd.mp3";
+		/* Add your sound effect if you want
+		String musicFile = "yourSoundName.mp3";
 		Media sound = new Media(new File(musicFile).toURI().toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(sound);
 		mediaPlayer.play();
+		*/
 		Button btn = new Button();
 		Button restart = new Button();
 		Runnable task = () -> {
